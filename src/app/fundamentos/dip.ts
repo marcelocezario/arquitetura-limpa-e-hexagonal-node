@@ -4,6 +4,7 @@ import Carro from "@/core/fundamentos/Carro";
 import Fusca from "@/core/fundamentos/Fusca";
 import Ferrari from "@/core/fundamentos/Ferrari";
 import Civic from "@/core/fundamentos/Civic";
+import { terminal } from "terminal-kit";
 
 export default async function dip() {
     TerminalUtil.titulo('DIP - Dependency Inversion Principle');
@@ -24,6 +25,7 @@ export default async function dip() {
         default:
             throw new Error('Selecione um veículo');
     }
-    corrida(carro);
+    // corrida(carro);
+    corrida(carro, terminal.gray);
     await TerminalUtil.esperarEnter();
 }
