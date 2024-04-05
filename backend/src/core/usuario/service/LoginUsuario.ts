@@ -14,14 +14,14 @@ export type LoginUsuarioSaida = {
     token: string;
 }
 
-export default class LoginUsuario implements CasoDeUso<LoginUsuarioEntrada, LoginUsuarioSaida> {
+export default class LoginUsuario implements CasoDeUso<LoginUsuarioEntrada, Usuario> {
 
     constructor(
         private _repositorio: RepositorioUsuario,
         private _provedorCripto: ProvedorCriptografia
-    ) {}
+    ) { }
 
-    async executar(entrada: LoginUsuarioEntrada): Promise<LoginUsuarioSaida> {
+    async executar(entrada: LoginUsuarioEntrada): Promise<Usuario> {
         const usuarioExistente = await this._repositorio.buscarPorEmail(entrada.email);
         if (!usuarioExistente) {
             throw new Error(Erros.USUARIO_NAO_EXISTE);
@@ -30,10 +30,7 @@ export default class LoginUsuario implements CasoDeUso<LoginUsuarioEntrada, Logi
         if (!mesmaSenha) {
             throw new Error(Erros.SENHA_INCORRETA);
         }
-        return {
-            usuario: { ...usuarioExistente, senha: undefined },
-            token: ''
-        }
+        return { ...usuarioExistente, senha: undefined }
     }
 
 }
